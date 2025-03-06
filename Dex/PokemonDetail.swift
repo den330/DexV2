@@ -22,7 +22,7 @@ struct PokemonDetail: View {
                     .shadow(color: .black, radius: 6)
                 
                 
-                AsyncImage(url: pokemon.sprite) { image in
+                AsyncImage(url: showShiny ? pokemon.shiny : pokemon.sprite) { image in
                     image
                         .interpolation(.none)
                         .resizable()
@@ -67,6 +67,16 @@ struct PokemonDetail: View {
             Stats(pokemon: pokemon)
         }
         .navigationTitle(pokemon.name!.capitalized)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showShiny.toggle()
+                } label: {
+                    Image(systemName: showShiny ? "wand.and.stars" : "wand.and.stars.inverse")
+                        .tint(showShiny ? .yellow : .primary)
+                }
+            }
+        }
     }
 }
 
