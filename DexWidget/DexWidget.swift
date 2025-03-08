@@ -15,7 +15,7 @@ struct Provider: TimelineProvider {
         do {
             results = try PersistenceController.shared.container.viewContext.fetch(Pokemon.fetchRequest())
         } catch {
-            print("could not catch: \(error)")
+            print("couldn't catch: \(error)")
         }
         
         if let randomPokemon = results.randomElement() {
