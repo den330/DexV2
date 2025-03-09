@@ -10,6 +10,7 @@
 		908D4D222D7CCDB7007ADB00 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 908D4D212D7CCDB7007ADB00 /* WidgetKit.framework */; };
 		908D4D242D7CCDB7007ADB00 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 908D4D232D7CCDB7007ADB00 /* SwiftUI.framework */; };
 		908D4D2F2D7CCDB9007ADB00 /* DexWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 908D4D1F2D7CCDB7007ADB00 /* DexWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		908D4D882D7D3EE1007ADB00 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4D872D7D3EE1007ADB00 /* Pokemon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		908D4D1F2D7CCDB7007ADB00 /* DexWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DexWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		908D4D212D7CCDB7007ADB00 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		908D4D232D7CCDB7007ADB00 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		908D4D872D7D3EE1007ADB00 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Pokemon.swift; path = Dex/Pokemon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -55,9 +57,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				Dex.xcdatamodeld,
 				Persistence.swift,
-				PokemonExt.swift,
+				Pokemon.swift,
 			);
 			target = 908D4D1E2D7CCDB7007ADB00 /* DexWidgetExtension */;
 		};
@@ -105,6 +106,7 @@
 		900250BD2D73BBAF000FCE98 = {
 			isa = PBXGroup;
 			children = (
+				908D4D872D7D3EE1007ADB00 /* Pokemon.swift */,
 				900250C82D73BBAF000FCE98 /* Dex */,
 				908D4D252D7CCDB7007ADB00 /* DexWidget */,
 				908D4D202D7CCDB7007ADB00 /* Frameworks */,
@@ -239,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				908D4D882D7D3EE1007ADB00 /* Pokemon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

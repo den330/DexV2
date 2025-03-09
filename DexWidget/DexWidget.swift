@@ -7,23 +7,22 @@
 
 import WidgetKit
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct Provider: TimelineProvider {
-    var randomPokemon: Pokemon {
-        var results: [Pokemon] = []
-        do {
-            results = try PersistenceController.shared.container.viewContext.fetch(Pokemon.fetchRequest())
-        } catch {
-            print("couldn't catch: \(error)")
-        }
+    
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Pokemon.self,
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
-        if let randomPokemon = results.randomElement() {
-            return randomPokemon
-        } else {
-            return PersistenceController.previewPokemon
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
         }
-    }
+    }()
     
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry.placeholder
@@ -35,19 +34,26 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for secondOffset in 0 ..< 10 {
-            let entryDate = Calendar.current.date(byAdding: .second, value: secondOffset * 5, to: currentDate)!
-            let entryPokemon = randomPokemon
-            let entry = SimpleEntry(date: entryDate, name: entryPokemon.name!, types: entryPokemon.types!, sprite: entryPokemon.spriteImage)
-            entries.append(entry)
+        Task { @MainActor in
+            var entries: [SimpleEntry] = []
+            
+            // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+            let currentDate = Date()
+            if let results = try? sharedModelContainer.mainContext.fetch(FetchDescriptor<Pokemon>()) {
+                for secondOffset in 0 ..< 10 {
+                    let entryDate = Calendar.current.date(byAdding: .second, value: secondOffset * 5, to: currentDate)!
+                    let entryPokemon = results.randomElement()!
+                    let entry = SimpleEntry(date: entryDate, name: entryPokemon.name, types: entryPokemon.types, sprite: entryPokemon.spriteImage)
+                    entries.append(entry)
+                }
+                
+                let timeline = Timeline(entries: entries, policy: .atEnd)
+                completion(timeline)
+            } else {
+                let timeline = Timeline(entries: [SimpleEntry.placeholder, SimpleEntry.placeholder2], policy: .atEnd)
+                completion(timeline)
+            }
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
 }
 
